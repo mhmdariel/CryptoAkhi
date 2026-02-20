@@ -1,0 +1,3 @@
+cd backend
+npm install bcrypt better-sqlite3 cookie-parser cors express express-rate-limit jsonwebtoken dotenv
+node app.js
