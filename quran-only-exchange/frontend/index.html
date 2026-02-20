@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نظام التطهير المالي • حكم الله فقط</title>
+    <style>
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            font-family: 'Amiri', 'Traditional Arabic', 'Kufi', Tahoma; 
+        }
+        body {
+            background: #0c3b2e;
+            background-image: radial-gradient(circle at 10% 20%, #1a5e44 0%, #072218 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .quran-card {
+            background: rgba(0, 30, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid #c9a758;
+            border-radius: 50px 50px 30px 30px;
+            padding: 30px;
+            width: 100%;
+            max-width: 750px;
+            color: #f5f0d7;
+            box-shadow: 0 30px 50px #000000b0, 0 0 0 2px #8b6f3c inset;
+        }
+        .bismillah {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #f5e3b3;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 0 15px #ffd700;
+        }
+        .quran-verse-display {
+            background: #1a3d2e;
+            border-right: 8px solid #e3b87c;
+            padding: 15px 25px;
+            border-radius: 40px;
+            margin: 20px 0;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #fff3d1;
+            box-shadow: 0 5px 0 #4a2e1a;
+        }
+        .verse-arabic {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #ffe5a3;
+            text-align: center;
+        }
+        .verse-translation {
+            font-size: 1.1rem;
+            color: #cce6d8;
+            text-align: center;
+            font-style: italic;
+        }
+        .header-quranic {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e4f3e;
+            border-radius: 80px;
+            padding: 15px 25px;
+            margin: 20px 0;
+            border: 1px solid #dbb45c;
+        }
+        .title-main {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fadf9e;
+        }
+        .nisab-info {
+            background: #3a5e4a;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+        }
+        input, button {
+            width: 100%;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 60px;
+            border: none;
+            font-size: 1.2rem;
+            font-family: inherit;
+        }
+        input {
+            background: #1e4f3e;
+            color: white;
+            border: 2px solid #b8944a;
+        }
+        input::placeholder {
+            color: #b8d9cb;
+        }
+        button {
+            background: #24755a;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #0d402f;
+            transition: 0.1s;
+            border: 1px solid #e3b87c;
+        }
+        button:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #0d402f;
+        }
+        .purify-btn {
+            background: #b78a3f;
+            box-shadow: 0 8px 0 #6b4e25;
+            font-size: 1.4rem;
+        }
+        .balance-panel {
+            background: #1a4a38;
+            border-radius: 40px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #c9a758;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+        }
+        .label {
+            font-size: 1.4rem;
+            color: #e5dbb0;
+        }
+        .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fadf9e;
+            font-family: monospace;
+        }
+        .zakat-box {
+            background: #4e3b2a;
+            border-radius: 30px;
+            padding: 15px 25px;
+            margin: 20px 0;
+            border-right: 6px solid #f5c542;
+        }
+        .error {
+            color: #ffb0a0;
+            margin: 10px;
+            text-align: center;
+        }
+        .success {
+            color: #b0ffc0;
+            text-align: center;
+        }
+        .pool-total {
+            background: #2d5e4a;
+            border-radius: 40px;
+            padding: 12px 20px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.2rem;
+            border: 1px solid #ffd966;
+        }
+        .logout {
+            background: #8b4e3c;
+            box-shadow: 0 8px 0 #5a2f23;
+        }
+        hr {
+            border: 1px solid #6f9e85;
+            margin: 25px 0;
+        }
+        .guidance-text {
+            background: #1d392b;
+            padding: 15px;
+            border-radius: 40px;
+            font-size: 1rem;
+            color: #ffefc0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="quran-card" id="app">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</div>
+    
+    <!-- Dynamic Qur'anic verse display -->
+    <div class="quran-verse-display" id="verseDisplay">
+        <div class="verse-arabic">وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا</div>
+        <div class="verse-translation">Allah has permitted trade and forbidden interest (2:275)</div>
+    </div>
+
+    <!-- Zakat Pool Total (public) -->
+    <div class="pool-total" id="poolTotal">
+        صندوق الزكاة: ٠ دولار
+    </div>
+
+    <!-- Authentication View -->
+    <div id="authView">
+        <div class="row" style="justify-content: center; gap:20px;">
+            <button id="showLogin" style="width:auto; padding:10px 35px;">دخول</button>
+            <button id="showRegister" style="width:auto; padding:10px 35px;">تسجيل</button>
+        </div>
+        
+        <div id="loginForm">
+            <input type="text" id="loginUsername" placeholder="اسم المستخدم">
+            <input type="password" id="loginPassword" placeholder="كلمة السر">
+            <button id="loginBtn">دخول</button>
+            <div id="loginError" class="error"></div>
+        </div>
+        
+        <div id="registerForm" style="display:none;">
+            <input type="text" id="regUsername" placeholder="اسم المستخدم">
+            <input type="password" id="regPassword" placeholder="كلمة السر">
+            <button id="registerBtn">تسجيل</button>
+            <div id="regError" class="error"></div>
+            <div id="regSuccess" class="success"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard (purified believers) -->
+    <div id="dashboardView" style="display:none;">
+        <div class="header-quranic">
+            <span class="title-main">الْمُطَهَّرُونَ</span>
+            <span class="nisab-info">النصاب: ٥٠٠٠ دولار</span>
+        </div>
+
+        <!-- Balance Panel -->
+        <div class="balance-panel">
+            <div class="row">
+                <span class="label">الرصيد</span>
+                <span class="value" id="balance">0</span>
+            </div>
+            <div class="row">
+                <span class="label">المال المُطَهَّر</span>
+                <span class="value" id="purifiedWealth">0</span>
+            </div>
+        </div>
+
+        <!-- Zakat Due Section -->
+        <div class="zakat-box">
+            <div class="row">
+                <span class="label">الزكاة المستحقة</span>
+                <span class="value" id="zakatDue">0</span>
+            </div>
+            <small>حسب سورة التوبة ٩:١٠٣ - خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ</small>
+        </div>
+
+        <!-- Qur'anic Reminder -->
+        <div class="guidance-text" id="quranicReminder">
+            يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِن طَيِّبَاتِ مَا كَسَبْتُمْ (٢:٢٦٧)
+        </div>
+
+        <!-- Deposit -->
+        <div class="row">
+            <input type="number" id="depositAmount" placeholder="مبلغ الإيداع" min="0.01" step="0.01">
+            <button id="depositBtn" style="width:auto;">إيداع</button>
+        </div>
+
+        <!-- Pay Zakat (Purification) -->
+        <button id="purifyBtn" class="purify-btn">أَدِّ زَكَاةَ مَالِكَ • تَطْهِير</button>
+
+        <!-- Sadaqah (Voluntary) -->
+        <div class="row">
+            <input type="number" id="sadaqahAmount" placeholder="صدقة تطوع" min="0.01" step="0.01">
+            <button id="sadaqahBtn" style="width:auto; background:#7f5a4b;">تصدَّق</button>
+        </div>
+
+        <hr>
+
+        <!-- Qur'anic Financial Guidance Selector -->
+        <select id="guidanceSelect" style="width:100%; padding:15px; border-radius:60px; margin:10px 0; background:#1e4f3e; color:white; border:2px solid #b8944a;">
+            <option value="">اختر آية للحكمة المالية</option>
+            <option value="debt">الدَّيْن (٢:٢٨٠)</option>
+            <option value="poverty">الفقراء (٩:٦٠)</option>
+            <option value="wealth">الغنى (٢٨:٧٧)</option>
+            <option value="investment">الاستثمار (٢:٢٦١)</option>
+            <option value="charity">الصدقة (٧٦:٨-٩)</option>
+        </select>
+        <div id="guidanceResult" class="guidance-text" style="margin-top:15px;"></div>
+
+        <hr>
+
+        <!-- Recent Transactions -->
+        <h3 style="color:#fadf9e;">آخر المعاملات</h3>
+        <div id="transactions"></div>
+
+        <button id="logoutBtn" class="logout">الخروج • توكُّل على الله</button>
+        <div id="dashboardError" class="error"></div>
+    </div>
+</div>
+
+<script>
+    const API_BASE = 'http://localhost:3000/api';
+
+    async function apiFetch(endpoint, options = {}) {
+        const res = await fetch(`${API_BASE}${endpoint}`, {
+            ...options,
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', ...options.headers }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Request failed');
+        return data;
+    }
+
+    // UI Elements
+    const authView = document.getElementById('authView');
+    const dashboardView = document.getElementById('dashboardView');
+    const verseDisplay = document.getElementById('verseDisplay');
+    const poolTotalSpan = document.getElementById('poolTotal');
+    
+    // Auth elements
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const showLogin = document.getElementById('showLogin');
+    const showRegister = document.getElementById('showRegister');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const loginError = document.getElementById('loginError');
+    const regError = document.getElementById('regError');
+    const regSuccess = document.getElementById('regSuccess');
+
+    // Dashboard elements
+    const balanceSpan = document.getElementById('balance');
+    const purifiedSpan = document.getElementById('purifiedWealth');
+    const zakatDueSpan = document.getElementById('zakatDue');
+    const quranicReminder = document.getElementById('quranicReminder');
+    const depositBtn = document.getElementById('depositBtn');
+    const purifyBtn = document.getElementById('purifyBtn');
+    const sadaqahBtn = document.getElementById('sadaqahBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const transactionsDiv = document.getElementById('transactions');
+    const dashboardError = document.getElementById('dashboardError');
+    const guidanceSelect = document.getElementById('guidanceSelect');
+    const guidanceResult = document.getElementById('guidanceResult');
+
+    // Update Zakat Pool
+    async function updatePoolTotal() {
+        try {
+            const data = await apiFetch('/zakat-pool');
+            poolTotalSpan.innerHTML = `صندوق الزكاة: ${data.total.toFixed(2)} دولار • مصارفها: ${data.recipients.length} أصناف (٩:٦٠)`;
+        } catch (e) {}
+    }
+    setInterval(updatePoolTotal, 10000);
+    updatePoolTotal();
+
+    // Toggle auth forms
+    showLogin.addEventListener('click', () => {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        loginError.textContent = '';
+    });
+    showRegister.addEventListener('click', () => {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        regError.textContent = '';
+        regSuccess.textContent = '';
+    });
+
+    // Register
+    registerBtn.addEventListener('click', async () => {
+        const username = document.getElementById('regUsername').value.trim();
+        const password = document.getElementById('regPassword').value;
+        regError.textContent = '';
+        regSuccess.textContent = '';
+        try {
+            const res = await apiFetch('/register', {
+                method: 'POST',
+                body: JSON.stringify({ username, password })
+            });
+            regSuccess.textContent = res.message;
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+        } catch (err) {
+            regError.textContent = err.message;
+        }
+    });
+
+    // Login
+    loginBtn.addEventListener('click', async () => {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        loginError.textContent = '';
+        try {
+            const res = await apiFetch('/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password })
+            });
+            authView.style.display = 'none';
+            dashboardView.style.display = 'block';
+            loadDashboard();
+            // Update verse
+            verseDisplay.innerHTML = `
+                <div class="verse-arabic">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</div>
+                <div class="verse-translation">Whoever fears Allah, He will make a way out (65:2)</div>
+            `;
+        } catch (err) {
+            loginError.textContent = err.message;
+        }
+    });
+
+    // Load Dashboard
+    async function loadDashboard() {
+        try {
+            const user = await apiFetch('/me');
+            balanceSpan.textContent = user.balance.toFixed(2);
+            purifiedSpan.textContent = user.purifiedWealth.toFixed(2);
+            zakatDueSpan.textContent = user.zakatDue.toFixed(2);
+            quranicReminder.textContent = user.quranicReminder || 'يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِن طَيِّبَاتِ مَا كَسَبْتُمْ (٢:٢٦٧)';
+
+            const txs = await apiFetch('/transactions');
+            transactionsDiv.innerHTML = txs.transactions.map(tx => {
+                let typeAr = '';
+                if (tx.type === 'deposit') typeAr = 'إيداع';
+                else if (tx.type === 'zakat') typeAr = 'زكاة • تطهير';
+                else if (tx.type === 'sadaqah') typeAr = 'صدقة';
+                return `
+                    <div class="row" style="margin:8px 0; background:#153e30; padding:8px 15px; border-radius:40px;">
+                        <span>${typeAr}</span>
+                        <span>${tx.amount} $</span>
+                        <span style="font-size:0.9rem; color:#d4c09c;">${new Date(tx.created_at).toLocaleString('ar-EG')}</span>
+                    </div>
+                `;
+            }).join('');
+        } catch (err) {
+            dashboardError.textContent = err.message;
+        }
+    }
+
+    // Deposit
+    depositBtn.addEventListener('click', async () => {
+        const amount = parseFloat(document.getElementById('depositAmount').value);
+        if (isNaN(amount) || amount <= 0) {
+            dashboardError.textContent = 'أدخل مبلغاً صحيحاً';
+            return;
+        }
+        try {
+            await apiFetch('/deposit', {
+                method: 'POST',
+                body: JSON.stringify({ amount })
+            });
+            document.getElementById('depositAmount').value = '';
+            loadDashboard();
+            updatePoolTotal();
+        } catch (err) {
+            dashboardError.textContent = err.message;
+        }
+    });
+
+    // Purify (Pay Zakat)
+    purifyBtn.addEventListener('click', async () => {
+        try {
+            const res = await apiFetch('/purify', { method: 'POST' });
+            dashboardError.style.color = '#b0ffc0';
+            dashboardError.textContent = res.message;
+            loadDashboard();
+            updatePoolTotal();
+        } catch (err) {
+            dashboardError.textContent = err.message;
+        }
+    });
+
+    // Sadaqah
+    sadaqahBtn.addEventListener('click', async () => {
+        const amount = parseFloat(document.getElementById('sadaqahAmount').value);
+        if (isNaN(amount) || amount <= 0) {
+            dashboardError.textContent = 'أدخل مبلغاً صحيحاً';
+            return;
+        }
+        try {
+            await apiFetch('/sadaqah', {
+                method: 'POST',
+                body: JSON.stringify({ amount })
+            });
+            document.getElementById('sadaqahAmount').value = '';
+            loadDashboard();
+            updatePoolTotal();
+        } catch (err) {
+            dashboardError.textContent = err.message;
+        }
+    });
+
+    // Guidance selector
+    guidanceSelect.addEventListener('change', async () => {
+        const situation = guidanceSelect.value;
+        if (!situation) {
+            guidanceResult.textContent = '';
+            return;
+        }
+        try {
+            const data = await apiFetch(`/quranic-guidance/${situation}`);
+            guidanceResult.textContent = data.guidance;
+        } catch (err) {
+            guidanceResult.textContent = 'Surah Al-Baqarah 2:286 - لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا';
+        }
+    });
+
+    // Logout
+    logoutBtn.addEventListener('click', async () => {
+        await apiFetch('/logout', { method: 'POST' });
+        authView.style.display = 'block';
+        dashboardView.style.display = 'none';
+        verseDisplay.innerHTML = `
+            <div class="verse-arabic">وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا</div>
+            <div class="verse-translation">Allah has permitted trade and forbidden interest (2:275)</div>
+        `;
+    });
+
+    // Auto-refresh user data
+    setInterval(async () => {
+        if (dashboardView.style.display !== 'none') {
+            try {
+                const user = await apiFetch('/me');
+                balanceSpan.textContent = user.balance.toFixed(2);
+                zakatDueSpan.textContent = user.zakatDue.toFixed(2);
+                quranicReminder.textContent = user.quranicReminder;
+            } catch (e) {}
+        }
+    }, 10000);
+
+    // Check login status on load
+    (async function init() {
+        try {
+            const user = await apiFetch('/me');
+            authView.style.display = 'none';
+            dashboardView.style.display = 'block';
+            loadDashboard();
+        } catch (e) {
+            authView.style.display = 'block';
+            dashboardView.style.display = 'none';
+        }
+    })();
+</script>
+</body>
+</html>
