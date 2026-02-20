@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>النظام المالي القرآني</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Amiri', 'Traditional Arabic', Tahoma; margin: 0; }
+        body { background: #0c3b2e; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 2px solid #c9a758; border-radius: 40px; padding: 30px; width: 100%; max-width: 800px; color: #f5f0d7; }
+        h1, h2 { text-align: center; color: #fadf9e; }
+        .bismillah { font-size: 2rem; text-align: center; margin-bottom: 20px; }
+        input, select, button { width: 100%; padding: 15px; margin: 10px 0; border-radius: 40px; border: none; font-size: 1.2rem; }
+        button { background: #24755a; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 6px 0 #0d402f; }
+        button:active { transform: translateY(5px); }
+        .section { background: #1a4f3a; border-radius: 30px; padding: 20px; margin: 20px 0; }
+        .card-detail { background: #2d5e4a; padding: 15px; border-radius: 20px; margin: 10px 0; direction: ltr; text-align: left; }
+        .error { color: #ffb0a0; }
+        .success { color: #b0ffc0; }
+        .row { display: flex; justify-content: space-between; margin: 10px 0; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</div>
+    <h1>🕌 النظام المالي القرآني</h1>
+
+    <!-- Authentication -->
+    <div id="authView">
+        <div class="row" style="justify-content: center; gap:20px;">
+            <button id="showLogin" style="width:auto;">دخول</button>
+            <button id="showRegister" style="width:auto;">تسجيل</button>
+        </div>
+        <div id="loginForm">
+            <input type="text" id="loginUsername" placeholder="اسم المستخدم">
+            <input type="password" id="loginPassword" placeholder="كلمة السر">
+            <button id="loginBtn">دخول</button>
+            <div id="loginError" class="error"></div>
+        </div>
+        <div id="registerForm" style="display:none;">
+            <input type="text" id="regUsername" placeholder="اسم المستخدم">
+            <input type="password" id="regPassword" placeholder="كلمة السر">
+            <button id="registerBtn">تسجيل</button>
+            <div id="regError" class="error"></div>
+            <div id="regSuccess" class="success"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardView" style="display:none;">
+        <div class="section">
+            <h2>الرصيد</h2>
+            <div class="row"><span>الرصيد العادي:</span> <span id="balance">0</span></div>
+            <div class="row"><span>المال المُطَهَّر:</span> <span id="purifiedWealth">0</span></div>
+            <div class="row"><span>الزكاة المستحقة:</span> <span id="zakatDue">0</span></div>
+            <button id="purifyBtn">أدِّ الزكاة (تطهير)</button>
+            <div class="row">
+                <input type="number" id="sadaqahAmount" placeholder="صدقة">
+                <button id="sadaqahBtn">تصدَّق</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💳 البطاقة</h2>
+            <div id="cardInfo">لا توجد بطاقة</div>
+            <input type="text" id="pin" placeholder="الرقم السري (4 أرقام)" maxlength="4">
+            <select id="cardMaterial">
+                <option value="plastic">بلاستيك</option>
+                <option value="metal">ستانلس ستيل (معدن)</option>
+            </select>
+            <button id="issueCardBtn">إصدار بطاقة</button>
+            <button id="blockCardBtn">حظر البطاقة</button>
+            <button id="refreshCardBtn">تحديث</button>
+            <div id="issueMessage"></div>
+        </div>
+
+        <div class="section">
+            <h2>🏧 الصراف الآلي</h2>
+            <input type="text" id="atmCardNumber" placeholder="رقم البطاقة كاملاً (16 رقم)" maxlength="16">
+            <input type="text" id="atmPin" placeholder="الرقم السري" maxlength="4">
+            <input type="number" id="atmAmount" placeholder="المبلغ">
+            <button id="atmWithdraw">سحب</button>
+            <button id="atmDeposit">إيداع</button>
+            <button id="atmBalance">استعلام</button>
+            <div id="atmMessage"></div>
+        </div>
+
+        <div class="section">
+            <h2>🖨️ الطابعة المعدنية</h2>
+            <button id="printerStatusBtn">حالة الطابعة</button>
+            <div id="printerStatus"></div>
+            <button id="printJobsBtn">وظائف الطباعة</button>
+            <div id="printJobs"></div>
+        </div>
+
+        <button id="logoutBtn">تسجيل الخروج</button>
+        <div id="dashboardError" class="error"></div>
+    </div>
+</div>
+
+<script>
+    const API_BASE = 'http://localhost:3000/api';
+    async function apiFetch(endpoint, options = {}) {
+        const res = await fetch(`${API_BASE}${endpoint}`, { ...options, credentials: 'include', headers: { 'Content-Type': 'application/json' } });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Request failed');
+        return data;
+    }
+
+    // DOM elements
+    const authView = document.getElementById('authView');
+    const dashboardView = document.getElementById('dashboardView');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const showLogin = document.getElementById('showLogin');
+    const showRegister = document.getElementById('showRegister');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginError = document.getElementById('loginError');
+    const regError = document.getElementById('regError');
+    const regSuccess = document.getElementById('regSuccess');
+    const dashboardError = document.getElementById('dashboardError');
+
+    const balanceSpan = document.getElementById('balance');
+    const purifiedSpan = document.getElementById('purifiedWealth');
+    const zakatDueSpan = document.getElementById('zakatDue');
+    const purifyBtn = document.getElementById('purifyBtn');
+    const sadaqahBtn = document.getElementById('sadaqahBtn');
+    const sadaqahAmount = document.getElementById('sadaqahAmount');
+
+    const cardInfoDiv = document.getElementById('cardInfo');
+    const pinInput = document.getElementById('pin');
+    const cardMaterial = document.getElementById('cardMaterial');
+    const issueCardBtn = document.getElementById('issueCardBtn');
+    const blockCardBtn = document.getElementById('blockCardBtn');
+    const refreshCardBtn = document.getElementById('refreshCardBtn');
+    const issueMessage = document.getElementById('issueMessage');
+
+    const atmCardNumber = document.getElementById('atmCardNumber');
+    const atmPin = document.getElementById('atmPin');
+    const atmAmount = document.getElementById('atmAmount');
+    const atmWithdraw = document.getElementById('atmWithdraw');
+    const atmDeposit = document.getElementById('atmDeposit');
+    const atmBalance = document.getElementById('atmBalance');
+    const atmMessage = document.getElementById('atmMessage');
+
+    const printerStatusBtn = document.getElementById('printerStatusBtn');
+    const printerStatusDiv = document.getElementById('printerStatus');
+    const printJobsBtn = document.getElementById('printJobsBtn');
+    const printJobsDiv = document.getElementById('printJobs');
+
+    // Toggle auth forms
+    showLogin.addEventListener('click', () => { loginForm.style.display = 'block'; registerForm.style.display = 'none'; loginError.textContent = ''; });
+    showRegister.addEventListener('click', () => { loginForm.style.display = 'none'; registerForm.style.display = 'block'; regError.textContent = ''; regSuccess.textContent = ''; });
+
+    // Register
+    registerBtn.addEventListener('click', async () => {
+        const username = document.getElementById('regUsername').value.trim();
+        const password = document.getElementById('regPassword').value;
+        try {
+            await apiFetch('/register', { method: 'POST', body: JSON.stringify({ username, password }) });
+            regSuccess.textContent = 'تم التسجيل!';
+        } catch (err) { regError.textContent = err.message; }
+    });
+
+    // Login
+    loginBtn.addEventListener('click', async () => {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        try {
+            await apiFetch('/login', { method: 'POST', body: JSON.stringify({ username, password }) });
+            authView.style.display = 'none';
+            dashboardView.style.display = 'block';
+            loadDashboard();
+        } catch (err) { loginError.textContent = err.message; }
+    });
+
+    // Logout
+    logoutBtn.addEventListener('click', async () => {
+        await apiFetch('/logout', { method: 'POST' });
+        authView.style.display = 'block';
+        dashboardView.style.display = 'none';
+    });
+
+    // Load dashboard data
+    async function loadDashboard() {
+        try {
+            const user = await apiFetch('/me');
+            balanceSpan.textContent = user.balance.toFixed(2);
+            purifiedSpan.textContent = user.purifiedWealth.toFixed(2);
+            zakatDueSpan.textContent = user.zakatDue.toFixed(2);
+        } catch (err) { dashboardError.textContent = err.message; }
+        loadCardInfo();
+    }
+
+    // Card info
+    async function loadCardInfo() {
+        try {
+            const card = await apiFetch('/card');
+            cardInfoDiv.innerHTML = `<div class="card-detail">آخر 4: ${card.last4} - انتهاء: ${card.expiry} - المادة: ${card.material}</div>`;
+        } catch { cardInfoDiv.innerHTML = 'لا توجد بطاقة نشطة'; }
+    }
+
+    // Issue card
+    issueCardBtn.addEventListener('click', async () => {
+        const pin = pinInput.value.trim();
+        const material = cardMaterial.value;
+        if (!pin || pin.length !== 4 || isNaN(pin)) { issueMessage.textContent = 'أدخل 4 أرقام'; return; }
+        try {
+            const data = await apiFetch('/card/issue', { method: 'POST', body: JSON.stringify({ pin, material }) });
+            issueMessage.textContent = data.message + (data.physicalCard ? ` (وظيفة: ${data.physicalCard.jobId})` : '');
+            loadCardInfo();
+        } catch (err) { issueMessage.textContent = err.message; }
+    });
+
+    blockCardBtn.addEventListener('click', async () => {
+        try { await apiFetch('/card/block', { method: 'POST' }); loadCardInfo(); } catch (err) { issueMessage.textContent = err.message; }
+    });
+
+    refreshCardBtn.addEventListener('click', loadCardInfo);
+
+    // Purify
+    purifyBtn.addEventListener('click', async () => {
+        try { const data = await apiFetch('/purify', { method: 'POST' }); loadDashboard(); } catch (err) { dashboardError.textContent = err.message; }
+    });
+
+    // Sadaqah
+    sadaqahBtn.addEventListener('click', async () => {
+        const amount = parseFloat(sadaqahAmount.value);
+        if (!amount || amount <= 0) return;
+        try { await apiFetch('/sadaqah', { method: 'POST', body: JSON.stringify({ amount }) }); loadDashboard(); } catch (err) { dashboardError.textContent = err.message; }
+    });
+
+    // ATM
+    atmWithdraw.addEventListener('click', async () => {
+        const cardNumber = atmCardNumber.value.trim();
+        const pin = atmPin.value.trim();
+        const amount = parseFloat(atmAmount.value);
+        if (!cardNumber || !pin || !amount) return;
+        try {
+            const data = await apiFetch('/atm/withdraw', { method: 'POST', body: JSON.stringify({ cardNumber, pin, amount }) });
+            atmMessage.textContent = `تم السحب: $${amount} - الرصيد الجديد: $${data.newBalance}`;
+            loadDashboard();
+        } catch (err) { atmMessage.textContent = err.message; }
+    });
+
+    atmDeposit.addEventListener('click', async () => {
+        const cardNumber = atmCardNumber.value.trim();
+        const pin = atmPin.value.trim();
+        const amount = parseFloat(atmAmount.value);
+        if (!cardNumber || !pin || !amount) return;
+        try {
+            const data = await apiFetch('/atm/deposit', { method: 'POST', body: JSON.stringify({ cardNumber, pin, amount }) });
+            atmMessage.textContent = `تم الإيداع: $${amount}`;
+            loadDashboard();
+        } catch (err) { atmMessage.textContent = err.message; }
+    });
+
+    atmBalance.addEventListener('click', async () => {
+        const cardNumber = atmCardNumber.value.trim();
+        const pin = atmPin.value.trim();
+        if (!cardNumber || !pin) return;
+        try {
+            const data = await apiFetch('/atm/balance', { method: 'POST', body: JSON.stringify({ cardNumber, pin }) });
+            atmMessage.textContent = `الرصيد: $${data.balance}`;
+        } catch (err) { atmMessage.textContent = err.message; }
+    });
+
+    // Printer
+    printerStatusBtn.addEventListener('click', async () => {
+        try {
+            const status = await apiFetch('/printer/status');
+            printerStatusDiv.innerHTML = `<div class="card-detail">الحالة: ${status.status} - الوظيفة الحالية: ${status.currentJob || 'لا شيء'} - في الانتظار: ${status.queueLength}</div>`;
+        } catch (err) { printerStatusDiv.innerHTML = 'الطابعة غير متصلة'; }
+    });
+
+    printJobsBtn.addEventListener('click', async () => {
+        try {
+            const jobs = await apiFetch('/printer/jobs');
+            printJobsDiv.innerHTML = jobs.map(j => `<div class="card-detail">معرف: ${j.job_id} - حالة: ${j.status} - ${j.completed_at ? 'أكتمل: '+new Date(j.completed_at).toLocaleString('ar-EG') : ''}</div>`).join('');
+        } catch (err) { printJobsDiv.innerHTML = err.message; }
+    });
+
+    // Auto-refresh
+    setInterval(async () => {
+        if (dashboardView.style.display !== 'none') {
+            try { const user = await apiFetch('/me'); balanceSpan.textContent = user.balance.toFixed(2); zakatDueSpan.textContent = user.zakatDue.toFixed(2); } catch {}
+        }
+    }, 10000);
+
+    // Initial check
+    (async function init() {
+        try { await apiFetch('/me'); authView.style.display = 'none'; dashboardView.style.display = 'block'; loadDashboard(); }
+        catch { authView.style.display = 'block'; dashboardView.style.display = 'none'; }
+    })();
+</script>
+</body>
+</html>
