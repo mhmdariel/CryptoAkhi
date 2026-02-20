@@ -1,0 +1,37 @@
+{
+  "name": "quran-only-exchange",
+  "version": "1.0.0",
+  "description": "A complete halal financial system governed solely by Qur'anic rulings – includes user accounts, Zakat calculation, riba prohibition, metal card issuance, and ATM simulation.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "quran",
+    "halal",
+    "finance",
+    "zakat",
+    "riba",
+    "islamic-banking",
+    "debit-card",
+    "atm",
+    "printer"
+  ],
+  "author": "Ummah Dev",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^9.0.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
