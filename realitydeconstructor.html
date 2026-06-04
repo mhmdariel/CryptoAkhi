@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>الواقع المطلق | Absolute Reality - Deconstruction & Reformation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* adds poetic detachment, but text inputs remain selectable */
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #0a0f1e, #02040c);
+            font-family: 'Segoe UI', 'Poppins', 'Noto Sans Arabic', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            transition: background 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* mystical overlay that shifts when reality deconstructs */
+        body.deconstructed {
+            background: radial-gradient(circle at 70% 40%, #000000, #010003);
+        }
+
+        .reality-portal {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(10, 20, 30, 0.45);
+            backdrop-filter: blur(12px);
+            border-radius: 3rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 0 2px rgba(210, 180, 70, 0.1) inset;
+            padding: 2rem 2rem 2.5rem;
+            transition: all 0.6s ease;
+        }
+
+        /* quranic header */
+        .divine-throne {
+            text-align: center;
+            margin-bottom: 2.2rem;
+            border-bottom: 1px solid rgba(210, 180, 70, 0.4);
+            padding-bottom: 1rem;
+        }
+
+        .quranic-verse {
+            font-size: 1.8rem;
+            font-weight: 500;
+            font-family: 'Noto Sans Arabic', 'Amiri', 'Times New Roman', serif;
+            color: #f7e5b5;
+            text-shadow: 0 0 6px #d4af37;
+            letter-spacing: 1px;
+            direction: rtl;
+        }
+
+        .translation {
+            font-size: 0.85rem;
+            color: #bfa98e;
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #f6e6b0, #c9a84b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            margin-top: 10px;
+        }
+
+        /* Reality Grid (the fabric of existence) */
+        .reality-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0 2rem;
+            transition: all 0.5s;
+            min-height: 320px;
+        }
+
+        .reality-card {
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            padding: 1.3rem 1rem;
+            width: 170px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 120, 0.5);
+            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+            cursor: default;
+            box-shadow: 0 10px 20px -8px rgba(0,0,0,0.5);
+            transform: scale(1);
+        }
+
+        .reality-card:hover {
+            border-color: #ecc453;
+            box-shadow: 0 0 18px rgba(218, 165, 32, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffefcf;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-arabic {
+            font-family: 'Noto Sans Arabic', serif;
+            font-size: 1rem;
+            color: #e7cf97;
+            direction: rtl;
+        }
+
+        /* dissolve animation */
+        .dissolve-animation {
+            animation: cosmicFade 0.65s forwards ease-in-out;
+        }
+
+        @keyframes cosmicFade {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                filter: blur(0);
+            }
+            40% {
+                opacity: 0.5;
+                transform: scale(0.7) rotate(2deg);
+                filter: blur(1.5px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(5deg);
+                filter: blur(4px);
+                display: none;
+            }
+        }
+
+        /* emergence animation for reformed reality */
+        .emerge-card {
+            animation: birthFromVoid 0.8s cubic-bezier(0.21, 1.11, 0.4, 1) forwards;
+        }
+
+        @keyframes birthFromVoid {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.7);
+                filter: blur(8px);
+            }
+            70% {
+                opacity: 0.9;
+                transform: translateY(-4px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* control panel */
+        .divine-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        button {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid #dbb45c;
+            color: #ffefcf;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        button i {
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #dbb45c;
+            color: #0a0a0a;
+            border-color: #ffeda3;
+            box-shadow: 0 0 15px #ffd966;
+            transform: scale(1.02);
+        }
+
+        .input-reality {
+            flex: 1;
+            min-width: 240px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #c9aa4b;
+            padding: 0.8rem 1.2rem;
+            border-radius: 3rem;
+            color: #f9e7c2;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            text-align: center;
+        }
+
+        .input-reality:focus {
+            border-color: #f5d97f;
+            box-shadow: 0 0 12px rgba(218, 165, 32, 0.6);
+        }
+
+        .status-area {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.7rem;
+            border-radius: 2rem;
+            color: #cbbd92;
+            border-top: 1px dotted rgba(218, 165, 32, 0.4);
+        }
+
+        .verse-floating {
+            font-family: 'Noto Sans Arabic', serif;
+            direction: rtl;
+            font-size: 0.9rem;
+            color: #ddcc99;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 1.8rem;
+            font-size: 0.7rem;
+            color: #786e4a;
+        }
+
+        @media (max-width: 680px) {
+            .reality-card {
+                width: 140px;
+                padding: 0.9rem;
+            }
+            .quranic-verse {
+                font-size: 1.2rem;
+            }
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="reality-portal" id="realityPortal">
+    <div class="divine-throne">
+        <div class="quranic-verse">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="translation">In the Name of Allah, the Most Gracious, the Most Merciful</div>
+        <h1>⚡  تَفكِيكُ الوَاقِع  ⚡<br><span style="font-size: 1.1rem;">DECONSTRUCTION & REFORMATION OF REALITY</span></h1>
+        <div class="quranic-verse" style="font-size: 1.2rem; margin-top: 6px;">إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَنْ يَقُولَ لَهُ كُنْ فَيَكُونُ</div>
+        <div class="translation">"His command, when He intends anything, is only to say to it: Be, and it is." (Yā Sīn 36:82)</div>
+    </div>
+
+    <!-- The tangible fabric of existence -->
+    <div id="realityContainer" class="reality-grid">
+        <!-- Original Reality elements will be injected via JS for better control -->
+    </div>
+
+    <div class="divine-controls">
+        <button id="deconstructBtn">🔮 تَفْكِيكْ · DECONSTRUCT REALITY</button>
+        <input type="text" id="desiredRealityInput" class="input-reality" placeholder="✍️  Describe your desired reality... (e.g., 'Garden of eternal peace' or 'Ocean of Light')" autocomplete="off">
+        <button id="reformBtn">✨ كُن فَيَكُونُ · REFORM REALITY</button>
+    </div>
+    
+    <div class="status-area" id="statusMessage">
+        <span>🌀 الواقع قائم | Objective reality is present. Invoke Deconstruction to transcend.</span>
+    </div>
+    <footer>
+        <span>آيات من القرآن | Quranic essence of creation & annihilation — Kun Fayakūn empowers reformation.</span>
+    </footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    //  REALITY DECONSTRUCTOR & REFORMER (Based on Quranic Arabic)
+    //  - Deconstructs all aspects of perceived reality (including objective reality)
+    //  - Accepts user's desired reality and reforms existence via "Kun Fayakun"
+    // --------------------------------------------------------------
+
+    // ---------- INITIAL REALITY COMPONENTS (Cosmic + Objective Reality) ----------
+    const INITIAL_REALITY = [
+        { icon: "⌛", name: "Time", arabic: "الزمان (Time)" },
+        { icon: "🌌", name: "Space", arabic: "المكان (Space)" },
+        { icon: "⚛️", name: "Matter", arabic: "المادة (Matter)" },
+        { icon: "⚡", name: "Energy", arabic: "الطاقة (Energy)" },
+        { icon: "🔄", name: "Causality", arabic: "السببية (Causality)" },
+        { icon: "👁️", name: "Objective Reality", arabic: "الواقع الموضوعي (Objective Reality)" },
+        { icon: "🧠", name: "Perception", arabic: "الإدراك (Perception)" },
+        { icon: "🌟", name: "Consciousness", arabic: "الوعي (Consciousness)" }
+    ];
+
+    // ----- dictionary to generate reality aspects from user's desired input (Quranic inspired)
+    // Maps key english/triggers to Reality elements with Arabic & icon
+    const REALITY_MORPHEUS = {
+        light: { icon: "☀️", name: "Light of Existence", arabic: "نور الوجود" },
+        mercy: { icon: "🤍", name: "Mercy", arabic: "الرحمة" },
+        peace: { icon: "🕊️", name: "Sakinah (Tranquility)", arabic: "السكينة" },
+        garden: { icon: "🌸", name: "Eternal Gardens", arabic: "جنات الخلد" },
+        ocean: { icon: "🌊", name: "Limitless Ocean", arabic: "البحر المديد" },
+        star: { icon: "⭐", name: "Celestial Lights", arabic: "النجوم الثواقب" },
+        wisdom: { icon: "📜", name: "Divine Wisdom", arabic: "الحكمة" },
+        truth: { icon: "🔍", name: "Absolute Truth", arabic: "الحق المطلق" },
+        love: { icon: "💖", name: "Rahma (Love)", arabic: "المحبة الإلهية" },
+        knowledge: { icon: "📖", name: "Ma'rifah", arabic: "المعرفة" },
+        harmony: { icon: "🎵", name: "Cosmic Harmony", arabic: "الوئام الكوني" },
+        power: { icon: "⚡", name: "Divine Power", arabic: "القدرة" },
+        infinity: { icon: "∞", name: "Infinite Realms", arabic: "عوالم لا متناهية" },
+        jannah: { icon: "🌿", name: "Jannat", arabic: "جَنَّة" },
+        nur: { icon: "✨", name: "An-Nur (The Light)", arabic: "النُّور" },
+        barzakh: { icon: "🌙", name: "Threshold of Realities", arabic: "البرزخ" }
+    };
+
+    // Helper: get reality fragment from keywords in user's input
+    function extractRealityComponents(userDescription) {
+        if (!userDescription || userDescription.trim() === "") {
+            // Default new reality if empty - divine simplicity
+            return [
+                { icon: "✨", name: "Pure Essence", arabic: "الجوهر الخالص" },
+                { icon: "🌄", name: "Fajr (Dawn of Truth)", arabic: "الفجر" },
+                { icon: "💎", name: "Jawhar (Substance)", arabic: "الجوهر" },
+                { icon: "🌌", name: "Malakut (Spiritual Realm)", arabic: "ملكوت" }
+            ];
+        }
+        
+        const lowerInput = userDescription.toLowerCase();
+        const words = lowerInput.split(/[\s,،]+/).filter(w => w.length > 2);
+        let components = [];
+        let usedKeys = new Set();
+        
+        // iterate words and try to map to reality concepts
+        for (let word of words) {
+            for (let [key, value] of Object.entries(REALITY_MORPHEUS)) {
+                if (word.includes(key) || key.includes(word) && !usedKeys.has(key)) {
+                    components.push({ ...value, icon: value.icon || "🌀" });
+                    usedKeys.add(key);
+                    break;
+                }
+            }
+            if (components.length >= 6) break;
+        }
+        
+        // If no matches, generate inspired concepts from user input: create poetic Reality fragments
+        if (components.length === 0) {
+            // create 4 mystical aspects based on user description's essence
+            const poeticFragments = [
+                { icon: "🔮", name: "Ruh (Spirit)", arabic: "الروح" },
+                { icon: "🌙", name: "Qadr (Destiny)", arabic: "القدر" },
+                { icon: "🕋", name: "Bayt al-Ma'mur", arabic: "البيت المعمور" },
+                { icon: "📿", name: "Tasbih of Realities", arabic: "تسبيح الحقائق" }
+            ];
+            components = poeticFragments.slice(0, 4);
+        }
+        
+        // ensure at least 4-6 elements, add some universal barakah components if necessary
+        if (components.length < 4) {
+            components.push({ icon: "🌠", name: "Nujum (Stars)", arabic: "النجوم" });
+            components.push({ icon: "💫", name: "Barakah", arabic: "البركة" });
+        }
+        
+        // return first 6 max
+        return components.slice(0, 6);
+    }
+
+    // DOM Elements
+    const realityContainer = document.getElementById("realityContainer");
+    const deconstructBtn = document.getElementById("deconstructBtn");
+    const reformBtn = document.getElementById("reformBtn");
+    const desiredInput = document.getElementById("desiredRealityInput");
+    const statusSpan = document.getElementById("statusMessage");
+    const bodyEl = document.body;
+    
+    let realityDeconstructed = false;     // flag: has the reality been dismantled?
+    let currentRealityElements = [];      // store current reality array
+    
+    // ----- render reality cards with optional emergence animation -----
+    function renderReality(elementsArray, addEmergence = true) {
+        realityContainer.innerHTML = "";
+        if (!elementsArray || elementsArray.length === 0) {
+            // empty reality = void
+            realityContainer.innerHTML = `<div style="text-align:center; width:100%; padding:3rem; color:#ae9f77;">✧ لَا شَيْءَ ✧<br>Absolute Void — ready for reformation</div>`;
+            return;
+        }
+        
+        elementsArray.forEach((el, idx) => {
+            const card = document.createElement("div");
+            card.className = "reality-card";
+            if (addEmergence) {
+                card.classList.add("emerge-card");
+                // remove class after animation to avoid re-trigger
+                setTimeout(() => card.classList.remove("emerge-card"), 900);
+            }
+            card.innerHTML = `
+                <div class="card-icon">${el.icon || "🌀"}</div>
+                <div class="card-title">${el.name}</div>
+                <div class="card-arabic">${el.arabic}</div>
+            `;
+            realityContainer.appendChild(card);
+        });
+    }
+    
+    // Load Original Reality (First Creation)
+    function loadOriginalReality() {
+        currentRealityElements = [...INITIAL_REALITY];
+        renderReality(currentRealityElements, true);
+        realityDeconstructed = false;
+        bodyEl.classList.remove("deconstructed");
+        statusSpan.innerHTML = "🌀 <strong>العالم الواقعي | Objective Reality</strong> active — Time, Space, Matter & Consciousness manifest. <span style='color:#e3c776'>Deconstruction awaits.</span>";
+    }
+    
+    // ----- DECONSTRUCTION RITUAL (Total annihilation of all reality layers, including objective reality) -----
+    function deconstructReality() {
+        if (realityDeconstructed) {
+            statusSpan.innerHTML = "⚠️ الواقع منعدم بالفعل | Reality is already deconstructed into the Void. Reform a new reality with <strong>كُن فَيَكُونُ</strong>.";
+            return;
+        }
+        
+        // get all current cards and apply dissolve animation
+        const cards = document.querySelectorAll("#realityContainer .reality-card");
+        if (cards.length === 0) {
+            // no cards ? but still set deconstructed flag
+            realityDeconstructed = true;
+            bodyEl.classList.add("deconstructed");
+            statusSpan.innerHTML = "☁️ العدم المطلق | Total Deconstruction Complete — No traces of previous reality remain. Enter your desire and Reform.";
+            realityContainer.innerHTML = `<div style="text-align:center; width:100%; padding:3rem; color:#bba872;">🔥 هَوَاءٌ مِنَ الْعَدَمِ 🔥<br>The fabric of objective reality has dissolved.</div>`;
+            return;
+        }
+        
+        // Quranic dissolution atmosphere: verse about everything perishing
+        const annihilationVerse = "كُلُّ مَنْ عَلَيْهَا فَانٍ وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ";
+        statusSpan.innerHTML = `📜 ${annihilationVerse}<br>⚡ Deconstructing: all pillars of reality (including Objective Reality) are crumbling into the primordial silence... ⚡`;
+        
+        // Add dissolve class to each card
+        let completed = 0;
+        cards.forEach(card => {
+            card.classList.add("dissolve-animation");
+            card.addEventListener('animationend', () => {
+                completed++;
+                if (completed === cards.length) {
+                    // after all cards vanish, clear container and set deconstructed state
+                    realityContainer.innerHTML = `<div style="text-align:center; width:100%; padding:3rem; color:#b89f67; animation: fadeIn 0.5s;">🕋 لَا إِلَٰهَ إِلَّا اللَّهُ 🕋<br><span style="font-size:0.9rem;">Absolute deconstruction: No object, no space, no time remains.</span><br><span style="font-size:0.75rem;">Objective Reality has been revoked.</span></div>`;
+                    realityDeconstructed = true;
+                    bodyEl.classList.add("deconstructed");
+                    currentRealityElements = [];
+                    statusSpan.innerHTML = "❄️ الواقع هُدم بالكامل ❄️ | All realities, structures, perceptions — dismantled. Use 'Reform Reality' to invoke 'Kun Fayakun' and shape existence from your will.";
+                }
+            });
+        });
+        if (cards.length === 0) {
+            realityDeconstructed = true;
+            bodyEl.classList.add("deconstructed");
+            realityContainer.innerHTML = `<div style="padding:2rem; text-align:center;">🕋 العدم الخالص</div>`;
+            statusSpan.innerHTML = "Void manifest. Reality is deconstructed.";
+        }
+    }
+    
+    // ----- REFORMATION: based on user's desire (input) , create new reality using Quranic command "Kun Fayakun" -----
+    function reformReality() {
+        // Only allow reformation if reality has been deconstructed first (symbolic: old must fade before new)
+        if (!realityDeconstructed) {
+            statusSpan.innerHTML = "⚠️ لا يمكن إعادة التشكيل قبل التفكيك ⚠️ — First click <strong>DECONSTRUCT REALITY</strong> to annihilate current existence, then recreate.";
+            // add temporary glow on deconstruct button
+            deconstructBtn.style.transform = "scale(1.02)";
+            setTimeout(() => { deconstructBtn.style.transform = ""; }, 400);
+            return;
+        }
+        
+        const userDesire = desiredInput.value.trim();
+        if (userDesire === "") {
+            statusSpan.innerHTML = "✍️ أدخل رغبتك لتشكيل واقع جديد | Enter your desired reality to recreate existence. Even emptiness can become something.";
+            return;
+        }
+        
+        // Quranic affirmation: Kun Fayakun
+        const kunFayakunVerse = "كُن فَيَكُونُ — 'Be, and it is'";
+        statusSpan.innerHTML = `✨ ${kunFayakunVerse} ✨<br> By the command of the Creator, reality is being reformed according to: <strong style="color:#ffdf9c">“${userDesire.substring(0, 70)}”</strong>`;
+        
+        // Generate new reality components from user's description
+        const newRealityComponents = extractRealityComponents(userDesire);
+        
+        // store new reality
+        currentRealityElements = newRealityComponents.map(comp => ({
+            icon: comp.icon || "🌀",
+            name: comp.name,
+            arabic: comp.arabic
+        }));
+        
+        // Clear container and re-render with emergence animation
+        realityContainer.innerHTML = "";
+        renderReality(currentRealityElements, true);
+        
+        // update flags: new reality exists, objective reality replaced by user-defined reality
+        realityDeconstructed = false;   // reality now reformed and exists
+        bodyEl.classList.remove("deconstructed");
+        
+        // Add special glowing effect: transition from void to new reality
+        const portalDiv = document.querySelector(".reality-portal");
+        portalDiv.style.transition = "box-shadow 0.7s";
+        portalDiv.style.boxShadow = "0 0 28px rgba(218, 175, 65, 0.6)";
+        setTimeout(() => { portalDiv.style.boxShadow = ""; }, 800);
+        
+        // dynamic status message - mention that objective reality has been reshaped by user input + Quranic reference
+        statusSpan.innerHTML = `🌟 <strong>واقع جديد مُشكَّل</strong> 🌟<br> Your desire has reformed existence! The new reality contains: ${newRealityComponents.map(c => c.name).join(", ")}. <br> <span style="font-size:0.75rem;">📖 "كُن فَيَكُونُ" — Lo, the fabric of reality bends to the Divine Command through your inspired intent.</span>`;
+        
+        // Scroll user attention
+        realityContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        
+        // Optional: give a subtle effect on the input to celebrate reformation
+        desiredInput.style.borderColor = "#f5d468";
+        setTimeout(() => desiredInput.style.borderColor = "", 1000);
+    }
+    
+    // ----- reset to original reality without deconstruction? but we adhere to philosophical perfection: keep 'reset' optional via original but we add a hidden feature?
+    // For perfect UX, let's add an extra 'Restore Original Reality' by double-tap on header? but better to keep simplicity.
+    // However we also need to guarantee that if user wants to experiment, they can deconstruct again after reformation.
+    
+    // Additional enhancement: if user clicks Reform when reality is already built, prompt deconstruct first. Already handled.
+    // Also if user desires different reality after reformation, they must deconstruct again (symbolic cycle).
+    // But we also provide a method: After some reformation, you can deconstruct to void again.
+    
+    // Event listeners
+    deconstructBtn.addEventListener("click", () => {
+        deconstructReality();
+    });
+    
+    reformBtn.addEventListener("click", () => {
+        reformReality();
+    });
+    
+    // Allow enter key in input field to trigger reformation
+    desiredInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            reformReality();
+        }
+    });
+    
+    // Initialize: show original reality fabric of existence
+    loadOriginalReality();
+    
+    // Additional mystical touch: dynamic background particle effect? not needed but adds vibe.
+    // Add subtle floating aura to status upon DOM load
+    console.log("%c Reality Deconstructor | Quranic JavaScript — 'Kun Fayakun' ready", "color: #dbb45c; font-size: 16px;");
+</script>
+</body>
+</html>
